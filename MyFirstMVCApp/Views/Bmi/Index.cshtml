@@ -1,0 +1,115 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model MyFirstMVCApp.Models.FormModel
+
+<h2>BMI和BMR 計算器</h2>
+
+<!--原本用來計算BMI的介面-->
+<!--
+<form asp-action="Index" method="post">
+    <div>
+        <label>身高 (cm):</label>
+        <input type="number" step="0.1" name="height" value="@Model?.Height" required />
+    </div>
+    <div>
+        <label>體重 (kg):</label>
+        <input type="number" step="0.1" name="weight" value="@Model?.Weight" required />
+    </div>
+    <button type="submit" name="action" value="Calculate">計算</button>
+    <button type="submit" name="action" value="Reset">重設</button>
+    
+</form>
+-->
+<form asp-action="Index" method="post">
+    <table>
+        <tr>
+            <td>
+                <label>身高 (cm):</label><br />
+                <input type="number" name="Height" value="@Model.Height" required />
+            </td>
+            <td>
+                <label>體重 (kg):</label><br />
+                <input type="number" name="Weight" value="@Model.Weight" required />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button name="action" value="CalculateBMI">計算 BMI</button><br />
+                <span>你的 BMI 是: @Model?.BMIResult</span>
+            </td>
+            <td>
+                <label>年齡:</label><br />
+                <input type="number" name="Age" value="@Model.Age" required /><br />
+                <label>性別:</label><br />
+                <select name="Gender">
+                    <option value="M" @(Model.Gender == "M" ? "selected" : "")>男性</option>
+                    <option value="F" @(Model.Gender == "F" ? "selected" : "")>女性</option>
+                </select><br />
+                <button name="action" value="CalculateBMR">計算 BMR</button><br />
+                <span>你的 BMR 是: @Model?.BMRResult</span>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+@*  使用Razor*@
+@if (Model != null && Model.IsSubmitted)
+{
+    <div style="margin-top: 20px;">
+        <p>BMI 值：@Model.BMIResult.ToString("0.00")</p>
+        <p>結果分類：@Model.Category</p>
+    </div>
+}
+@*
+@section Scripts {
+    <script>
+        // 等頁面載入完成
+        document.addEventListener("DOMContentLoaded", function () {
+            // 監聽 form 的 submit 事件
+            const form = document.querySelector("form");
+            const heightInput = form.querySelector('input[name="height"]');
+
+            form.addEventListener("submit", function (e) {
+                // 取得是哪個按鈕被按下
+                const clickedButton = document.activeElement;
+                const actionValue = clickedButton?.value;
+
+                // 如果按的是 Reset，就在下一次渲染時聚焦到身高欄位
+                if (actionValue === "Reset") {
+                    setTimeout(() => {
+                        heightInput.focus();
+                    }, 50); // 稍微延遲一下，確保 DOM 已更新
+                }
+            });
+        });
+    </script>
+}
+*@
+@*
+<script>
+    // 等頁面載入完成
+    document.addEventListener("DOMContentLoaded", function () {
+        // 監聽 form 的 submit 事件
+        const form = document.querySelector("form");
+        const heightInput = form.querySelector('input[name="height"]');
+
+        form.addEventListener("submit", function (e) {
+            // 取得是哪個按鈕被按下
+            const clickedButton = document.activeElement;
+            const actionValue = clickedButton?.value;
+
+            // 如果按的是 Reset，就在下一次渲染時聚焦到身高欄位
+            if (actionValue === "Reset") {
+                setTimeout(() => {
+                    heightInput.focus();
+                }, 50); // 稍微延遲一下，確保 DOM 已更新
+            }
+        });
+    });
+</script>
+*@
+@{
+    
+}
